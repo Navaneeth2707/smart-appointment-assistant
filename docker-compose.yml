@@ -1,0 +1,16 @@
+version: "3.9"
+
+services:
+  app:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+
+    container_name: payload-app
+
+    ports:
+      - "3000:3000"
+
+    environment:
+      PAYLOAD_SECRET: your-super-secret-key
+      DATABASE_URI: mongodb+srv://anavaneeth277_db_user:ggpexChWHXAxsnj4@cluster0.lsw6w1n.mongodb.net/?appName=Cluster0
