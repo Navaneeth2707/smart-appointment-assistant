@@ -1,16 +1,44 @@
 version: "3.9"
 
 services:
-  app:
+  mongodb:
+    image: mongo:6.0
+    container_name: appointment-mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    restart: always
+
+  backend:
     build:
       context: ./backend
       dockerfile: Dockerfile
-
-    container_name: payload-app
-
+    container_name: payload-backend
     ports:
       - "3000:3000"
-
+    env_file:
+      - ./backend/.env
     environment:
-      PAYLOAD_SECRET: your-super-secret-key
-      DATABASE_URI: mongodb+srv://anavaneeth277_db_user:ggpexChWHXAxsnj4@cluster0.lsw6w1n.mongodb.net/?appName=Cluster0
+      DATABASE_URI: mongodb://mongodb:27017/appointment-cms
+    depends_on:
+      - mongodb
+    restart: always
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: nextjs-frontend
+    ports:
+      - "3001:3001"
+    env_file:
+      - ./frontend/.env.local
+    environment:
+      PAYLOAD_API: http://backend:3000/api
+    depends_on:
+      - backend
+    restart: always
+
+volumes:
+  mongo-data:

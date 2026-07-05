@@ -139,7 +139,7 @@ export interface Appointment {
   id: string;
   patientName: string;
   phoneNumber: string;
-  selectedService: string | Service;
+  serviceName: string | Service;
   appointmentDate: string;
   updatedAt: string;
   createdAt: string;
@@ -265,7 +265,7 @@ export interface ServicesSelect<T extends boolean = true> {
 export interface AppointmentsSelect<T extends boolean = true> {
   patientName?: T;
   phoneNumber?: T;
-  selectedService?: T;
+  serviceName?: T;
   appointmentDate?: T;
   updatedAt?: T;
   createdAt?: T;

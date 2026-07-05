@@ -26,7 +26,7 @@ export const Appointments: CollectionConfig = {
       required: true,
     },
     {
-      name: 'selectedService',
+      name: 'serviceName',
       type: 'relationship',
       relationTo: 'services',
       required: true,
