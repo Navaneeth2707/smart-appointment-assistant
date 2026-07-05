@@ -2,12 +2,17 @@ version: "3.9"
 
 services:
   mongodb:
-    image: mongo:6.0
+    image: mongo:latest
     container_name: appointment-mongodb
     ports:
       - "27017:27017"
     volumes:
       - mongo-data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
     restart: always
 
   backend:
@@ -17,12 +22,17 @@ services:
     container_name: payload-backend
     ports:
       - "3000:3000"
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+      - /app/.next
     env_file:
       - ./backend/.env
     environment:
       DATABASE_URI: mongodb://mongodb:27017/appointment-cms
     depends_on:
-      - mongodb
+      mongodb:
+        condition: service_healthy
     restart: always
 
   frontend:
@@ -31,7 +41,11 @@ services:
       dockerfile: Dockerfile
     container_name: nextjs-frontend
     ports:
-      - "3001:3001"
+      - "3002:3001"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+      - /app/.next
     env_file:
       - ./frontend/.env.local
     environment:
