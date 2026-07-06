@@ -12,22 +12,21 @@ interface Service {
 
 export default function Home() {
   const [services, setServices] = useState<Service[]>([]);
-  const [loadingServices, setLoadingServices] = useState(true);
-
-  async function fetchServices() {
-    try {
-      const res = await fetch("/api/services");
-      const data = await res.json();
-      setServices(data.docs || []);
-    } catch (err) {
-      console.error("Failed to fetch services:", err);
-    } finally {
-      setLoadingServices(false);
-    }
-  }
-
   useEffect(() => {
-    fetchServices();
+    let active = true;
+    fetch("/api/services")
+      .then((res) => res.json())
+      .then((data) => {
+        if (active) {
+          setServices(data.docs || []);
+        }
+      })
+      .catch((err) => {
+        console.error("Failed to fetch services:", err);
+      });
+    return () => {
+      active = false;
+    };
   }, []);
 
   // Fallback demo services to display if DB is empty, making the UI gorgeous

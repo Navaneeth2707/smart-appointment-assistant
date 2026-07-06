@@ -49,7 +49,7 @@ export async function findServiceByName(
   console.log("[PAYLOAD API Client] getServices docs list:", services.docs);
 
   const service = services.docs.find(
-    (item: any) =>
+    (item: { name: string }) =>
       item.name.toLowerCase().trim() ===
       serviceName.toLowerCase().trim()
   );
@@ -99,7 +99,7 @@ export async function createAppointment(data: {
 Check Slot Availability
 --------------------------------
 */
-export async function checkSlotAvailability(targetDateStr: string) {
+export async function checkSlotAvailability(targetDateStr: string, timezone?: string) {
   try {
     const appointments = await getAppointments();
     const targetTime = new Date(targetDateStr).getTime();
@@ -117,15 +117,20 @@ export async function checkSlotAvailability(targetDateStr: string) {
 
       // Check if the difference is less than 30 minutes
       if (Math.abs(targetTime - apptTime) < SLOT_DURATION_MS) {
+        const formattedDate = timezone 
+          ? new Date(appt.appointmentDate).toLocaleString("en-US", { timeZone: timezone })
+          : new Date(appt.appointmentDate).toLocaleString();
+
         return { 
           available: false, 
-          error: `Slot is already booked at ${new Date(appt.appointmentDate).toLocaleString()}` 
+          error: `Slot is already booked at ${formattedDate}` 
         };
       }
     }
 
     return { available: true };
-  } catch (error: any) {
-    return { available: false, error: error.message || "Failed to check availability" };
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : "Failed to check availability";
+    return { available: false, error: errorMessage };
   }
 }

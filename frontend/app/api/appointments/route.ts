@@ -5,7 +5,7 @@ export async function GET() {
   try {
     const appointments = await getAppointments();
     return NextResponse.json(appointments);
-  } catch (error: any) {
+  } catch (error) {
     console.error("Error in GET /api/appointments:", error);
     return NextResponse.json({ docs: [] });
   }

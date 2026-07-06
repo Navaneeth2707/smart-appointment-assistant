@@ -41,6 +41,10 @@ export default function Chat({ onBookingSuccess }: Props) {
     setLoading(true);
 
     try {
+      const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      const timezoneOffset = new Date().getTimezoneOffset();
+      const clientTime = new Date().toISOString();
+
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: {
@@ -51,6 +55,9 @@ export default function Chat({ onBookingSuccess }: Props) {
             role: m.role,
             content: m.content,
           })),
+          timezone,
+          timezoneOffset,
+          clientTime,
         }),
       });
 
