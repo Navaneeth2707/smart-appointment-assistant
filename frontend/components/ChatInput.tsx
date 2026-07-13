@@ -33,7 +33,7 @@ export default function ChatInput({ onSend, loading }: Props) {
       />
       <button
         onClick={submit}
-        disabled={loading || !text.trim()}
+        // disabled={loading || !text.trim()}
         className="bg-gradient-to-r from-teal-500 to-emerald-400 hover:from-teal-400 hover:to-emerald-300 text-slate-950 px-5 py-3 rounded-xl font-bold text-sm transition active:scale-95 hover:shadow-lg hover:shadow-teal-500/20 disabled:opacity-30 disabled:pointer-events-none whitespace-nowrap"
       >
         Send

@@ -173,7 +173,6 @@ export async function POST(req: NextRequest) {
               toolResults.push({
                 tool_call_id: toolCall.id,
                 role: "tool",
-                name,
                 content: JSON.stringify(services),
               });
 
@@ -186,7 +185,6 @@ export async function POST(req: NextRequest) {
               toolResults.push({
                 tool_call_id: toolCall.id,
                 role: "tool",
-                name,
                 content: JSON.stringify(appointments),
               });
 
@@ -198,7 +196,6 @@ export async function POST(req: NextRequest) {
                 toolResults.push({
                   tool_call_id: toolCall.id,
                   role: "tool",
-                  name,
                   content: JSON.stringify({
                     error: "Invalid or missing appointmentDate. Please ask the user for a specific date and time.",
                   }),
@@ -211,7 +208,6 @@ export async function POST(req: NextRequest) {
               toolResults.push({
                 tool_call_id: toolCall.id,
                 role: "tool",
-                name,
                 content: JSON.stringify(availability),
               });
 
@@ -224,7 +220,6 @@ export async function POST(req: NextRequest) {
                 toolResults.push({
                   tool_call_id: toolCall.id,
                   role: "tool",
-                  name,
                   content: JSON.stringify({
                     error: "Missing required details. You must ask the user for their name, phone, service, and date/time before booking.",
                   }),
@@ -242,7 +237,6 @@ export async function POST(req: NextRequest) {
               toolResults.push({
                 tool_call_id: toolCall.id,
                 role: "tool",
-                name,
                 content: JSON.stringify(appointment),
               });
 
@@ -256,7 +250,6 @@ export async function POST(req: NextRequest) {
           toolResults.push({
             tool_call_id: toolCall.id,
             role: "tool",
-            name,
             content: JSON.stringify({
               error: toolErrorMessage,
             }),

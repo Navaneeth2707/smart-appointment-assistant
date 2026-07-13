@@ -45,6 +45,9 @@ export default function Chat({ onBookingSuccess }: Props) {
       const timezoneOffset = new Date().getTimezoneOffset();
       const clientTime = new Date().toISOString();
 
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 15000);
+
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: {
@@ -59,8 +62,10 @@ export default function Chat({ onBookingSuccess }: Props) {
           timezoneOffset,
           clientTime,
         }),
+        signal: controller.signal,
       });
 
+      clearTimeout(timeoutId);
       const data = await response.json();
 
       setMessages((prev) => [
