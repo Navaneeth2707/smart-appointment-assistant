@@ -16,7 +16,7 @@ export default function Chat({ onBookingSuccess }: Props) {
       id: uuid(),
       role: "assistant",
       content:
-        "👋 Hello there! Welcome to AI Clinic. I'm AI Doctor, your virtual assistant.\n\nI can help you book an appointment today! To get started, could you please tell me your name?",
+        "👋 Hello there! Welcome to AI Clinic. I'm AI Assistant., your virtual assistant.\n\nI can help you book an appointment today! To get started, could you please tell me your name?",
     },
   ]);
 
