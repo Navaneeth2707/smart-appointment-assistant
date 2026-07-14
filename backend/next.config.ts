@@ -7,7 +7,10 @@ const __filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(__filename)
 
 const nextConfig: NextConfig = {
-  allowedDevOrigins: ['89.116.33.186'],
+  allowedDevOrigins: ['89.116.33.186',
+     'api.demo.autostreamai.in',
+
+  ],
   images: {
     localPatterns: [
       {
